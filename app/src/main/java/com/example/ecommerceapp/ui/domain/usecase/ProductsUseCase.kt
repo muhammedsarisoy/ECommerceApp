@@ -1,4 +1,4 @@
-package com.example.ecommerceapp.ui.domain.usecase.HomeUseCase
+package com.example.ecommerceapp.ui.domain.usecase
 
 import com.example.ecommerceapp.ui.data.mapper.toProducts
 import com.example.ecommerceapp.ui.domain.model.Products
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class HomeUseCase @Inject constructor(
+class ProductsUseCase @Inject constructor(
     private val repository: ProductsRepository
 ) {
 
