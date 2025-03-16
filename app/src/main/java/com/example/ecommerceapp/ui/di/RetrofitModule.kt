@@ -1,6 +1,8 @@
 package com.example.ecommerceapp.ui.di
 
 import com.example.ecommerceapp.ui.data.remote.ProductsApi
+import com.example.ecommerceapp.ui.data.repository.ProductsRepositoryImpl
+import com.example.ecommerceapp.ui.domain.repository.ProductsRepository
 import com.example.ecommerceapp.ui.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -29,4 +31,9 @@ object RetrofitModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ProductsApi = retrofit.create(ProductsApi::class.java)
 
+    @Provides
+    @Singleton
+    fun provideProductsRepository(api: ProductsApi): ProductsRepository {
+        return ProductsRepositoryImpl(api)
+    }
 }

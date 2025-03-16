@@ -100,4 +100,7 @@ dependencies {
 
     // WorkManager
     implementation(libs.workManager)
+
+    //
+    implementation(libs.kotlinx.coroutines.android)
 }
