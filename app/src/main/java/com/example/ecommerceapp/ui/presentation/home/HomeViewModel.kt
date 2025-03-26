@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ecommerceapp.ui.domain.usecase.ProductsUseCase
+import com.example.ecommerceapp.ui.utils.HomeState
 import com.example.ecommerceapp.ui.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val productsUseCase: ProductsUseCase
+    private val productsUseCase: ProductsUseCase,
 ): ViewModel() {
 
     private val _productsState = mutableStateOf(HomeState())
@@ -42,4 +43,6 @@ class HomeViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+
 }

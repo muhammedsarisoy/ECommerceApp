@@ -1,4 +1,4 @@
-package com.example.ecommerceapp.ui.presentation.home
+package com.example.ecommerceapp.ui.utils
 
 import com.example.ecommerceapp.ui.domain.model.Products
 

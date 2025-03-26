@@ -19,6 +19,8 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -26,16 +28,22 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.ecommerceapp.ui.presentation.components.BottomNavigationBar
+import com.example.ecommerceapp.ui.presentation.components.NavDrawerBar
 import com.example.ecommerceapp.ui.presentation.navigation.NavGraph
 import com.example.ecommerceapp.ui.presentation.theme.MyappTheme
 import com.example.ecommerceapp.ui.utils.Menu
@@ -54,61 +62,40 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val items = listOf(
-                Menu("Home", Icons.Default.Home, Icons.Default.Home, 4),
-                Menu("Cart", Icons.Default.ShoppingCart, Icons.Default.ShoppingCart, 10),
-                Menu("Settings", Icons.Default.Settings, Icons.Default.Settings),
-                Menu("Profile", Icons.Default.Person, Icons.Default.Person)
-            )
-
             val navController = rememberNavController()
             val drawerState = rememberDrawerState(DrawerValue.Closed)
             val scope = rememberCoroutineScope()
-            var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
-
+            val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+            val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
             MyappTheme {
                 ModalNavigationDrawer(
                     drawerState = drawerState,
-                    drawerContent = {
-                        ModalDrawerSheet {
-                            Spacer(modifier = Modifier.height(16.dp))
-                            items.forEachIndexed { index, item ->
-                                NavigationDrawerItem(
-                                    label = { Text(text = item.title) },
-                                    selected = index == selectedItemIndex,
-                                    onClick = {
-                                        selectedItemIndex = index
-                                        scope.launch { drawerState.close() }
-                                    },
-                                    icon = {
-                                        Icon(
-                                            imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
-                                            contentDescription = item.title
-                                        )
-                                    },
-                                    badge = {
-                                        item.badgeCount?.let {
-                                            Text(text = it.toString())
-                                        }
-                                    },
-                                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                                )
-                            }
-                        }
-                    }
+                    drawerContent = { NavDrawerBar(modifier = Modifier) }
                 ) {
                     Scaffold(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                         topBar = {
-                            TopAppBar(
-                                title = {
-                                },
-                                navigationIcon = {
-                                    IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
-                                    }
-                                },
-                            )
+                            if (currentRoute != Screen.Profile.route) {
+                                TopAppBar(
+                                    colors = TopAppBarDefaults.mediumTopAppBarColors(
+                                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                        titleContentColor = MaterialTheme.colorScheme.primary,
+                                    ),
+                                    title = {
+                                        Text(
+                                            text = "Medium Top App Bar",
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    },
+                                    actions = {
+                                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                            Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                                        }
+                                    },
+                                    scrollBehavior = scrollBehavior
+                                )
+                            }
                         },
                         bottomBar = { BottomNavigationBar(navController = navController) }
                     ) { innerPadding ->
