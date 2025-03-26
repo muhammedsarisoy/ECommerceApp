@@ -103,4 +103,9 @@ dependencies {
 
     //
     implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.play.services.auth)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
+
 }

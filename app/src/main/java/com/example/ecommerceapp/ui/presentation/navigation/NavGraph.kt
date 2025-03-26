@@ -1,8 +1,7 @@
 package com.example.ecommerceapp.ui.presentation.navigation
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,7 +17,7 @@ fun NavGraph(
     navController: NavHostController,
     startDestination: String,
     modifier: Modifier = Modifier
-){
+) {
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -39,5 +38,6 @@ fun NavGraph(
         composable(Screen.Profile.route) {
             ProfileScreen(navController = navController)
         }
+
     }
 }

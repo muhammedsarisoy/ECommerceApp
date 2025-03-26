@@ -12,4 +12,5 @@ sealed class Screen(val route: String , val title: String , val icon: ImageVecto
     object Favorite: Screen("FavoriteScreen" , "Favorite" , Icons.Default.Favorite)
     object Order: Screen("OrderScreen" , "Order" , Icons.Default.ShoppingCart)
     object Profile: Screen("ProfileScreen" , "Profile" , Icons.Default.Person)
+    object Login: Screen("LoginScreen" , "Login" , Icons.Default.Person)
 }

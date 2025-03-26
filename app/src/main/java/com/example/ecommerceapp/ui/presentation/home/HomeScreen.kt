@@ -81,7 +81,8 @@ fun HomeScreen(
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     item { SearchBar() }
                     item { SectionTitle(title = "Categories") }
-                    item { }
+                    item { CategoriesRow(
+                        categories = state.products, selectedCategory = "", onCategorySelected = {}) }
                     item { SectionTitle(title = "Products") }
                     items(state.products.chunked(2)) { rowProducts ->
                         Row(modifier = Modifier.fillMaxWidth()) {
@@ -105,7 +106,7 @@ fun HomeScreen(
 
 @Composable
 fun CategoriesRow(
-    categories: List<String>,
+    categories: List<Products>,
     selectedCategory: String,
     onCategorySelected: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -114,10 +115,41 @@ fun CategoriesRow(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-
+        items(categories) { category ->
+            CategoryCard(
+                category = category.category,
+                isSelected = category.category == selectedCategory,
+                onClick = { onCategorySelected(category.category) }
+                )
+        }
     }
 }
 
+
+@Composable
+fun CategoryCard(
+    category: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+){
+    ElevatedCard(
+        modifier = modifier.padding(8.dp),
+        onClick = onClick,
+    ) {
+        Box(
+            modifier = Modifier.padding(8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = category,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+    }
+}
 
 @Composable
 fun SearchBar() { // value: String, onTextChanged: (String) -> Unit
