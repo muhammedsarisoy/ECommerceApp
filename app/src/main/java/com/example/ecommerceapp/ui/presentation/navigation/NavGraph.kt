@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.ecommerceapp.ui.presentation.auth.AuthSelectionScreen
 import com.example.ecommerceapp.ui.presentation.favorite.FavoriteScreen
 import com.example.ecommerceapp.ui.presentation.home.HomeScreen
 import com.example.ecommerceapp.ui.presentation.order.OrderScreen
@@ -37,6 +38,10 @@ fun NavGraph(
 
         composable(Screen.Profile.route) {
             ProfileScreen(navController = navController)
+        }
+
+        composable(Screen.AuthSelect.route) {
+            AuthSelectionScreen(navController = navController)
         }
 
     }

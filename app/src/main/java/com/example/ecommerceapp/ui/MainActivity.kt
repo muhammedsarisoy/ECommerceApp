@@ -55,8 +55,6 @@ import kotlinx.coroutines.launch
 
 
 
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -84,7 +82,7 @@ fun MainAppScreen() {
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            if (currentRoute != Screen.Profile.route) {
+            if (currentRoute != Screen.Profile.route && currentRoute != Screen.AuthSelect.route) {
                 TopAppBar(
                     colors = TopAppBarDefaults.mediumTopAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -109,15 +107,18 @@ fun MainAppScreen() {
                 )
             }
         },
-        bottomBar = { BottomNavigationBar(navController = navController) }
-    ) { innerPadding ->
+        bottomBar = {
+            if (currentRoute != Screen.AuthSelect.route) {
+                BottomNavigationBar(navController = navController)
+            }
+        }
+    ){ innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             NavGraph(
                 navController = navController,
-                startDestination = Screen.Home.route
+                startDestination = Screen.AuthSelect.route
             )
 
-            // Bottom Sheet Navigation
             NavBottomSheet(
                 isVisible = showBottomSheet,
                 onDismiss = { showBottomSheet = false }
