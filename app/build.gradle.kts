@@ -108,4 +108,19 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.lifecycle.runtime.ktx)
 
+    // Import the BoM for the Firebase platform
+    implementation(platform(libs.firebase.bom.v33110))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation(libs.firebase.auth)
+
+    // Also add the dependencies for the Credential Manager libraries and specify their versions
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
+    implementation(libs.play.services.auth.v2070)
+    implementation(libs.play.services.auth.api.phone)
+
 }

@@ -4,6 +4,7 @@ import com.example.ecommerceapp.ui.data.remote.ProductsApi
 import com.example.ecommerceapp.ui.data.repository.ProductsRepositoryImpl
 import com.example.ecommerceapp.ui.domain.repository.ProductsRepository
 import com.example.ecommerceapp.ui.utils.Constants.BASE_URL
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,4 +37,8 @@ object RetrofitModule {
     fun provideProductsRepository(api: ProductsApi): ProductsRepository {
         return ProductsRepositoryImpl(api)
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 }

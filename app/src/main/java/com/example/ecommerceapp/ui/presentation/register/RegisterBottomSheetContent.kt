@@ -34,12 +34,11 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun RegisterBottomSheetContent(
     onClose: () -> Unit,
-    onRegisterSuccess: () -> Unit
+    onRegisterSuccess: (email: String, password: String) -> Unit
 ) {
     var name by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    var confirmPassword by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -94,22 +93,10 @@ fun RegisterBottomSheetContent(
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
-            label = { Text("Password") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
-        )
-
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { /* Kayıt işlemleri */ onRegisterSuccess() },
+            onClick = { onRegisterSuccess(email, password) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)

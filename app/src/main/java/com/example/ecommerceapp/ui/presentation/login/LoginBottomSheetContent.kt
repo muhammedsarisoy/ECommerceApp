@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun LoginBottomSheetContent(
     onClose: () -> Unit,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: (email: String, password: String) -> Unit
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -87,7 +87,9 @@ fun LoginBottomSheetContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { /* Giriş işlemleri */ onLoginSuccess() },
+            onClick = {
+                onLoginSuccess(email, password)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
