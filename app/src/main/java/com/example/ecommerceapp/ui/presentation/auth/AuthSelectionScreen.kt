@@ -108,7 +108,9 @@ fun AuthSelectionScreen(
                 is AuthResult.Error -> {
                     Toast.makeText(context, result.message, Toast.LENGTH_SHORT).show()
                 }
-                else -> {}
+                else -> {
+                    Toast.makeText(context, "Unknown error", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
